@@ -242,6 +242,11 @@ export function parseDelimited(input: string, delimiter = ','): string[][] {
       field += char;
     }
   }
+  // 输入末尾没有换行时补一次 flush，否则最后一行会被丢掉
+  if (field !== '' || row.length > 0) {
+    row.push(field);
+    rows.push(row);
+  }
   return rows.filter((r) => !(r.length === 1 && r[0].trim() === ''));
 }
 

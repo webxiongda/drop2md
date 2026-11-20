@@ -51,7 +51,7 @@ cd drop2md
 npm install && npm run dev
 ```
 
-打开终端提示的本地地址即可使用。生产构建请先运行 `npm run build`，再运行 `npm run preview`。
+打开终端提示的本地地址即可使用。生产构建请先运行 `npm run build`，再运行 `npm run preview`。测试运行 `npm test`。
 
 ## 页面
 

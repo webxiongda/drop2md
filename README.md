@@ -51,7 +51,7 @@ cd drop2md
 npm install && npm run dev
 ```
 
-Open the local URL printed in your terminal. For a production build, run `npm run build` followed by `npm run preview`.
+Open the local URL printed in your terminal. For a production build, run `npm run build` followed by `npm run preview`. Run the test suite with `npm test`.
 
 ## Pages
 
