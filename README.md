@@ -1,78 +1,105 @@
-# Drop2MD · 拖拽转 Markdown
+<div align="center">
 
+[English](README.md) | [中文](README-zh.md)
+
+📄
+
+# Drop2MD
+
+**Drag any file in, get clean Markdown out — 100% in your browser.**
+
+[![Stars](https://img.shields.io/github/stars/webxiongda/drop2md?style=flat-square&color=34d399)](https://github.com/webxiongda/drop2md/stargazers)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
-[![Stars](https://img.shields.io/github/stars/your-org/drop2md?style=flat-square&color=34d399)](https://github.com/your-org/drop2md/stargazers)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-22d3ee?style=flat-square)](https://github.com/your-org/drop2md/pulls)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-22d3ee?style=flat-square)](https://github.com/webxiongda/drop2md/pulls)
 [![Made with React](https://img.shields.io/badge/Made%20with-React-61dafb?style=flat-square&logo=react)](https://react.dev/)
 [![Made with TypeScript](https://img.shields.io/badge/Made%20with-TypeScript-3178c6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 
-> 把任何文本文件拖进来，立刻得到干净的 Markdown —— 全部在本地浏览器完成，文件不会上传。
+</div>
 
-Drop2MD 灵感来自 [microsoft/markitdown](https://github.com/microsoft/markitdown)：把「万物转 Markdown」这件事搬进浏览器，零后端、零依赖、零上传。拖入文件即可批量转换、实时预览、一键复制或下载 `.md`。
+<div align="center">
+  <img src="assets/screenshot.png" alt="Drop2MD conversion workbench — file queue on the left, live Markdown preview on the right" width="800" />
+</div>
 
-## ✨ 特性
+## Why Drop2MD?
 
-- **拖拽即转**：支持多文件拖入与点击多选，悬停有上浮反馈，拖入动画清晰。
-- **隐私优先**：所有解析都在浏览器里完成（DOMParser / File API），没有任何网络请求。
-- **多种格式**：
-  - `.md` / `.txt` / `.log` → 原样文本
-  - `.html` / `.htm` → 提取标题、段落、列表（含嵌套）、链接、代码块、引用、表格
-  - `.csv` / `.tsv` → Markdown 表格，正确处理引号包裹、转义引号 `""` 与字段内逗号
-  - `.json` / `.jsonl` → 漂亮格式化后包成 ```json 代码块
-  - 其他文本 → 带语言提示的代码块；二进制文件给出友好提示
-- **批量队列**：每个文件显示原名、大小、状态、目标 `.md` 名，可单独移除。
-- **实时预览**：零依赖自写 Markdown 渲染器，支持标题、粗体、斜体、代码块、行内代码、链接、列表、表格；输出全部转义并带链接协议白名单，避免 XSS。
-- **一键带走**：复制单个结果、下载单个 `.md`、批量下载全部。
-- **开箱体验**：内置 HTML 片段 / CSV / JSON 三个示例按钮，点一下就能看到完整流程。
-- **精致界面**：深色玻璃拟态、青绿霓虹强调色、微交互动效、响应式布局。
+Turning a document into Markdown usually means shipping it to a server. Online converters upload your files, hold them in a queue you do not control, and hand back markup you cannot fully verify. For anything sensitive — personal notes, contracts, internal docs — that trade-off is hard to justify.
 
-## 🚀 快速开始
+Drop2MD takes the opposite route. Inspired by the momentum behind [microsoft/markitdown](https://github.com/microsoft/markitdown), it brings "anything to Markdown" into the browser itself. Every file is read with the File API and parsed locally; nothing is uploaded, no backend is involved, and no analytics watch what you drop in. Close the network tab and it still works.
+
+The result is a focused workspace for a common job: drag a batch of files, watch clean Markdown appear in a live preview, then copy or download it. It is a static site you can host anywhere, embed in a portal, or run entirely offline.
+
+## Features
+
+| Feature | Description |
+| --- | --- |
+| Drag-and-drop conversion | Drop multiple files at once or click to multi-select, with hover feedback and a clear drop animation. |
+| Privacy by default | All parsing happens in-browser via File API and DOMParser. Zero network requests, no backend, no telemetry. |
+| Structured HTML extraction | DOMParser walks headings, paragraphs, nested lists, links, code blocks, blockquotes, rules, and tables into Markdown. |
+| Quote-safe CSV / TSV | A state-machine parser handles quoted fields, escaped quotes (`""`), embedded commas, and delimiters, emitting clean Markdown tables. |
+| JSON pretty-printing | `.json`, `.jsonl`, and `.ndjson` are formatted with indentation and wrapped in a fenced `json` block. |
+| Live, safe preview | A dependency-free renderer covers headings, emphasis, code, links, lists, and tables — with HTML escaping and a link-protocol whitelist to block XSS. |
+| Batch queue & manifest | Track name, size, status, and target `.md` name per file; rename in bulk and export a copyable download checklist. |
+| Copy or download | Copy a single result, download one `.md`, or download the whole queue in one click. |
+| History & settings | localStorage keeps up to 100 results; choose light/dark preview themes, default export, and history policy. |
+| Ready-made samples | One-click HTML, CSV, and JSON examples run through the exact same conversion path as real files. |
+
+## Quick Start
 
 ```bash
-npm install
-npm run dev
+git clone https://github.com/webxiongda/drop2md.git
+cd drop2md
+npm install && npm run dev
 ```
 
-打开终端提示的本地地址即可使用。生产构建：
+Open the local URL printed in your terminal. For a production build, run `npm run build` followed by `npm run preview`.
 
-```bash
-npm run build
-npm run preview
-```
+## Pages
 
-## 🎯 核心玩法
+Drop2MD uses hash routing; each of its ten pages is a directly linkable view.
 
-1. 把文件拖到左侧虚线区域，或点击区域多选文件。
-2. 在「转换队列」里选中任意一条，右侧即时显示 Markdown 预览。
-3. 用顶部标签在 **实时预览** 与 **Markdown 源码** 之间切换。
-4. 点击 **复制** 贴到别处，或点 **下载 .md** / **全部下载** 保存到本地。
-5. 想快速体验？点左侧的三个示例卡片，无需准备文件。
+| Hash | Page | What it does |
+| --- | --- | --- |
+| `#/convert` | Conversion Workbench | Drop files and get clean Markdown instantly. |
+| `#/queue` | File Queue | Manage every added file and its conversion status. |
+| `#/preview` | Preview Center | Large preview with source comparison and immersive fullscreen. |
+| `#/formats` | Format Guide | See how each format converts, with input and output side by side. |
+| `#/history` | Conversion History | Revisit locally saved results and reload them any time. |
+| `#/examples` | Examples Library | Load real samples in one click to experience the full flow. |
+| `#/batch` | Batch Operations | Rename in bulk, review a summary table, and export a download manifest. |
+| `#/guide` | User Guide | Four steps to get started, privacy always first. |
+| `#/about` | About & Trends | The origin, community signals, tech stack, and license. |
+| `#/settings` | Settings | Preview theme, default export, and history policy. |
 
-## 📸 截图
+## How it works
 
-截图占位区（后续替换为真实截图）：
+Each file's leading bytes are checked for binary content (NUL bytes, control-character ratio, strict UTF-8), and the extension selects a converter. HTML goes through DOMParser for structured extraction; CSV / TSV through a quote-aware state machine that escapes pipes and preserves embedded commas; JSON through `JSON.stringify` into a fenced block; other text files become fenced code blocks with a language hint. The preview renderer escapes every text node and validates link protocols against a whitelist before emitting any tag, so file content can never become executable markup. The queue, history, and settings live in localStorage with corruption-tolerant reads and a graceful in-memory fallback when storage is unavailable.
 
-```text
-docs/
-  ├── screenshot-desktop.png   # 桌面端：左侧队列 + 右侧预览
-  ├── screenshot-mobile.png    # 移动端：上下堆叠布局
-  └── screenshot-preview.png   # 预览与源码切换
-```
+## Tech Stack
 
-## 🔐 隐私说明
+- **React 18** — UI and state management.
+- **TypeScript** — strict types, `tsc` with zero errors.
+- **Vite 5** — build tooling and dev server.
+- **Browser APIs** — DOMParser, File API, localStorage.
+- **Zero extra runtime dependencies** — routing, rendering, and conversion are all hand-written; only `react` and `react-dom` ship at runtime.
 
-没有后端、没有上传、没有统计脚本。文件读取全部使用浏览器原生 `File.text()` / `File.arrayBuffer()`，HTML 解析使用 `DOMParser`。关掉网络依然可用。
+## Documentation
 
-## 🛠 技术细节
+- [中文文档 (Chinese README)](README-zh.md)
+- [Contributing Guide](CONTRIBUTING.md)
+- [MIT License](LICENSE)
 
-- Vite + React 18 + TypeScript，仅 `react` / `react-dom` 两个运行时依赖。
-- Markdown 预览为自写最小渲染器（见 `src/markdown.ts`），不引入 `marked` 等第三方库。
-- 转换核心见 `src/converter.ts`，示例数据见 `src/samples.ts`。
+## Contributing
 
-## 🤝 贡献
+Contributions are welcome — this project is kept deliberately small, so focused changes have a real impact. Bug reports and pull requests for new format readers, Markdown renderer features, additional samples, and tests are all appreciated. If you are looking for a place to start, check the issues labeled `good first issue`; extending the format rules in `src/converter.ts` or the renderer in `src/markdown.ts` is a good entry point. Please read the [Contributing Guide](CONTRIBUTING.md) before opening a PR.
 
-欢迎提 Issue 与 PR！新增格式解析、完善 Markdown 语法、补充测试用例都非常欢迎。
+## Roadmap
 
-## 📄 License
+- [ ] More format readers (DOCX, PDF text, EPUB) via pure-browser parsers
+- [ ] Additional Markdown renderer syntax (task lists, footnotes, definition lists)
+- [ ] Import and restore from the JSON backup exported in Settings
+- [ ] Keyboard shortcuts and a command palette for power users
+- [ ] Interface i18n beyond English and Chinese
+
+## License
 
 [MIT](LICENSE) © 2026 Drop2MD contributors
