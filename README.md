@@ -43,6 +43,8 @@ The result is a focused workspace for a common job: drag a batch of files, watch
 | History & settings | localStorage keeps up to 100 results; choose light/dark preview themes, default export, and history policy. |
 | Ready-made samples | One-click HTML, CSV, and JSON examples run through the exact same conversion path as real files. |
 
+**🔗 Live demo:** https://webxiongda.github.io/drop2md/
+
 ## Quick Start
 
 ```bash

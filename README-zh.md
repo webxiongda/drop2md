@@ -43,6 +43,8 @@ Drop2MD 走了相反的路。它受 [microsoft/markitdown](https://github.com/mi
 | 历史与设置 | localStorage 最多保留 100 条结果；可选亮色/暗色预览主题、默认导出方式与历史策略。 |
 | 开箱示例 | 一键加载 HTML、CSV、JSON 示例，走的是与真实文件完全相同的转换流程。 |
 
+**🔗 在线预览：** https://webxiongda.github.io/drop2md/
+
 ## 快速开始
 
 ```bash
